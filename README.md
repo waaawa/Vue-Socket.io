@@ -17,6 +17,7 @@
 	<img alt="Patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png" height="50" />
 </a>
 </p>
+<p>It can be used in the uni-app app environment</p>
 <p>Vue-Socket.io is a socket.io integration for Vuejs, easy to use, supporting Vuex and component level socket consumer managements.<p>
 
 ###### Demo
