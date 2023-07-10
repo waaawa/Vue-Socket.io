@@ -8,11 +8,11 @@ export default {
         if(!this.sockets) this.sockets = {};
 
         this.sockets.subscribe = (event, callback) => {
-            this.$vueSocketIo.emitter.addListener(event, callback, this);
+            this.$vueMqtt.emitter.addListener(event, callback, this);
         };
 
         this.sockets.unsubscribe = (event) => {
-            this.$vueSocketIo.emitter.removeListener(event, this);
+            this.$vueMqtt.emitter.removeListener(event, this);
         };
 
     },
@@ -27,7 +27,7 @@ export default {
             Object.keys(this.$options.sockets).forEach(event => {
 
                 if(event !== 'subscribe' && event !== 'unsubscribe') {
-                    this.$vueSocketIo.emitter.addListener(event, this.$options.sockets[event], this);
+                    this.$vueMqtt.emitter.addListener(event, this.$options.sockets[event], this);
                 }
 
             });
@@ -45,7 +45,7 @@ export default {
 
             Object.keys(this.$options.sockets).forEach(event => {
 
-                this.$vueSocketIo.emitter.removeListener(event, this);
+                this.$vueMqtt.emitter.removeListener(event, this);
 
             });
 

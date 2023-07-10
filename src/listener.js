@@ -1,51 +1,54 @@
+export default class VueMqttListener {
+  /**
+   * mqtt-client reserved event keywords
+   * @type {string[]}
+   */
+  static staticEvents = [
+    'connect',
+    'error',
+    'disconnect',
+    'reconnect',
+    'reconnect_attempt',
+    'reconnecting',
+    'reconnect_error',
+    'reconnect_failed',
+    'connect_error',
+    'connect_timeout',
+    'connecting',
+    'ping',
+    'pong'
+  ];
 
-export default class VueSocketIOListener {
+  static eventMapHandler = (e) => null;
 
-    /**
-     * socket.io-client reserved event keywords
-     * @type {string[]}
-     */
-    static staticEvents = [
-            'connect',
-            'error',
-            'disconnect',
-            'reconnect',
-            'reconnect_attempt',
-            'reconnecting',
-            'reconnect_error',
-            'reconnect_failed',
-            'connect_error',
-            'connect_timeout',
-            'connecting',
-            'ping',
-            'pong'
-    ];
+  static setEventMapHandler(handler) {
+    VueMqttListener.eventMapHandler = handler;
+  }
 
-    constructor(io, emitter){
-        this.io = io;
-        this.register();
-        this.emitter = emitter;
-    }
+  constructor(mqtt, emitter) {
+    this.mqtt = mqtt;
+    this.register();
+    this.emitter = emitter;
+  }
 
-    /**
-     * Listening all socket.io events
-     */
-    register(){
-        this.io.onevent = (packet) => {
-            let [event, ...args] = packet.data;
+  /**
+   * Listening all mqtt events
+   */
+  register() {
+    this.mqtt.on('message', (topic, message) => {
+      const msg = message.toString();
+      const key = VueMqttListener.eventMapHandler(topic);
+      key && this.onEvent(key, JSON.parse(msg));
+      this.onEvent(topic, JSON.parse(msg));
+    });
 
-            if(args.length === 1) args = args[0];
+    VueMqttListener.staticEvents.forEach((event) => this.mqtt.on(event, (args) => this.onEvent(event, args)));
+  }
 
-            this.onEvent(event, args)
-        };
-        VueSocketIOListener.staticEvents.forEach(event => this.io.on(event, args => this.onEvent(event, args)))
-    }
-
-    /**
-     * Broadcast all events to vuejs environment
-     */
-    onEvent(event, args){
-        this.emitter.emit(event, args);
-    }
-
+  /**
+   * Broadcast all events to vuejs environment
+   */
+  onEvent(event, args) {
+    this.emitter.emit(event, args);
+  }
 }

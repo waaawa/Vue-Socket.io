@@ -1,9 +1,9 @@
 {
-  "name": "vue-socket.io",
+  "name": "vue-mqtt",
   "author": "Metin Seylan <metinsyln@gmail.com>",
   "version": "3.0.10",
   "description": "socket.io implementation for Vue.js and Vuex",
-  "main": "dist/vue-socketio.js",
+  "main": "dist/vue-mqtt.js",
   "scripts": {
     "build": "webpack --mode=production --progress --hide-modules"
   },
@@ -28,9 +28,6 @@
     "url": "https://github.com/MetinSeylan/Vue-Socket.io/issues"
   },
   "homepage": "https://github.com/MetinSeylan/Vue-Socket.io",
-  "dependencies": {
-    "socket.io-client": "^2.1.1"
-  },
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",

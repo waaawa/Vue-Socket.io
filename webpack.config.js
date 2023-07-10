@@ -2,10 +2,10 @@ module.exports = {
     mode: process.env.NODE_ENV,
     entry: ["./src/index.js"],
     output: {
-        library: "VueSocketIO",
+        library: "VueMqtt",
         libraryTarget: "umd",
         libraryExport: "default",
-        filename: "vue-socketio.js",
+        filename: "vue-mqtt.js",
         globalObject: "typeof self !== 'undefined' ? self : this"
     },
     module: {
